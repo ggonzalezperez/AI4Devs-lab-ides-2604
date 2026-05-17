@@ -21,12 +21,18 @@ Disponibles en `ai-specs/agents/`:
 
 ## Skills Disponibles
 
-Disponibles en `ai-specs/skills/`:
-- **enriquecer-historia** — Transforma una historia de usuario básica en un ticket técnico detallado con criterios de aceptación, pseudocódigo, ficheros a modificar y tests unitarios esperados.
-- **commit** — Genera un commit descriptivo siguiendo las convenciones del proyecto.
-- **actualizar-docs** — Actualiza la documentación técnica relevante después de implementar un cambio.
+Los skills son instrucciones detalladas guardadas en `ai-specs/skills/<nombre>/SKILL.md`.
 
-Usa los skills con: `/enriquecer-historia`, `/commit`, `/actualizar-docs`
+**Cuando el usuario escriba `/enriquecer-historia`, `/commit` o `/actualizar-docs`, DEBES:**
+1. Leer el archivo `ai-specs/skills/<nombre>/SKILL.md` correspondiente con la herramienta Read.
+2. Seguir exactamente las instrucciones que contiene ese archivo.
+3. No hacer nada antes de leer el skill.
+
+| Comando | Archivo | Propósito |
+|---------|---------|-----------|
+| `/enriquecer-historia` | `ai-specs/skills/enriquecer-historia/SKILL.md` | Transforma una historia de usuario básica en un ticket técnico detallado |
+| `/commit` | `ai-specs/skills/commit/SKILL.md` | Genera un commit descriptivo siguiendo Conventional Commits |
+| `/actualizar-docs` | `ai-specs/skills/actualizar-docs/SKILL.md` | Actualiza la documentación técnica tras implementar un cambio |
 
 ## Reglas Obligatorias
 
