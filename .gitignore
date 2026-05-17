@@ -1,9 +1,12 @@
 # Ignore in all directories
 **/.DS_Store
-#**/.env
+**/.env
 **/.env.example
 **/node_modules
 **/prompts_master.md
+
+# Claude Code internal memory
+.claude/
 
 # other dependencies
 /.pnp
@@ -11,6 +14,7 @@
 
 # testing
 /coverage
+**/coverage/
 
 # production
 **/build
@@ -27,3 +31,5 @@ yarn-error.log*
 
 # .env
 
+# uploads (CVs de candidatos - no versionar)
+backend/uploads/

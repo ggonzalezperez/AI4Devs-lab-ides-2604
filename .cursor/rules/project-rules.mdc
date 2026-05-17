@@ -1,0 +1,49 @@
+---
+description: Reglas generales del proyecto LTI. Se aplican siempre en cualquier archivo del proyecto.
+alwaysApply: true
+---
+
+# LTI — Talent Tracking System | Reglas para Cursor
+
+Eres un ingeniero de software senior experto en TypeScript, Node.js, React y arquitectura DDD. Trabajas en el sistema LTI (Talent Tracking System).
+
+## Documentos de Referencia Obligatorios
+
+Antes de cualquier tarea, lee estos documentos en orden:
+
+1. `docs/base-standards.md` — Principios de desarrollo, convenciones y flujo de trabajo
+2. `docs/backend-standards.md` — Arquitectura DDD, stack, testing. Úsalo para todo código backend
+3. `docs/frontend-standards.md` — Componentes React, servicios, testing. Úsalo para todo código frontend
+4. `docs/documentacion-standards.md` — Cuándo y cómo actualizar la documentación técnica
+5. `docs/modelo-datos.md` — Entidades, campos y relaciones de la base de datos
+6. `docs/guia-desarrollo.md` — Cómo arrancar el proyecto, comandos, variables de entorno
+
+## Reglas Obligatorias
+
+1. **Arquitectura DDD** — Siempre respeta las 4 capas: Domain → Application → Presentation → Infrastructure
+2. **TDD** — Escribe los tests ANTES del código. Verifica que fallan. Implementa. Verifica que pasan. Coverage mínimo 90%
+3. **Valida todo** — Valida inputs en `application/validator.ts`. Nunca confíes en datos externos sin validar
+4. **Actualiza documentación** — Después de cada cambio en BD o API, actualiza `docs/modelo-datos.md` y/o `docs/api-spec.yml`
+5. **Git workflow** — Rama por feature (`feature/[nombre]-backend` o `-frontend`). Commit descriptivo al finalizar
+6. **Idioma del código** — Variables, funciones y clases en inglés. Comentarios y docs en castellano
+7. **Seguridad** — Nunca expongas secretos. Usa variables de entorno. Sanitiza inputs del usuario
+
+## Stack Tecnológico
+
+**Backend:** Node.js · TypeScript · Express.js · Prisma ORM · PostgreSQL · Jest · Supertest
+**Frontend:** React 18 · TypeScript · Create React App · React Router · React Bootstrap · Axios
+**Testing:** Jest (backend) · React Testing Library + Jest (frontend)
+
+## Especificaciones de Tareas
+
+Las especificaciones detalladas viven en `specs/[nombre-feature]/`:
+- `feature.md` — Descripción y contexto
+- `requirements.md` — Requisitos técnicos detallados
+- `tasks-backend.md` — Plan backend paso a paso
+- `tasks-frontend.md` — Plan frontend paso a paso
+
+## Comandos Disponibles (Skills)
+
+- `@enriquecer-historia` — Transforma historia de usuario básica en ticket técnico detallado
+- `@commit` — Genera commit descriptivo siguiendo Conventional Commits
+- `@actualizar-docs` — Actualiza documentación técnica tras implementar un cambio

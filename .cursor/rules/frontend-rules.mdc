@@ -1,0 +1,70 @@
+---
+description: Reglas específicas para archivos de frontend. Se aplican automáticamente cuando trabajas en frontend/src/.
+globs: ["frontend/src/**/*.tsx", "frontend/src/**/*.ts", "frontend/src/**/*.css"]
+alwaysApply: false
+---
+
+# Reglas Frontend — LTI
+
+## Lee siempre antes de empezar
+- `docs/frontend-standards.md` — stack React, convenciones de componentes, testing
+
+## Estructura de Carpetas
+
+```
+frontend/src/
+├── components/[NombreComponente]/  ← Un componente por carpeta con su CSS
+├── pages/                          ← Páginas completas (composición de componentes)
+├── services/                       ← Comunicación con API (axios) — nunca HTTP en componentes
+├── types/                          ← Interfaces TypeScript compartidas
+└── App.tsx                         ← Rutas con React Router
+```
+
+## Reglas de Componentes
+
+- **Siempre** componentes funcionales con hooks — nunca class components
+- **TypeScript** strict en todos los archivos nuevos
+- **Props** con interfaces TypeScript definidas explícitamente
+- **Servicios separados** — toda llamada HTTP va en `src/services/`
+- **React Bootstrap** para UI estándar (Form, Button, Alert, Spinner, Container, Row, Col)
+
+## Estado del Formulario — Patrón
+
+```typescript
+const [formData, setFormData] = useState<CreateDto>({ /* iniciales */ });
+const [errors, setErrors] = useState<Partial<Record<keyof CreateDto, string>>>({});
+const [loading, setLoading] = useState(false);
+const [apiError, setApiError] = useState<string | null>(null);
+const [success, setSuccess] = useState(false);
+```
+
+## data-testid Obligatorios
+
+Siempre añadir en elementos clave:
+- `data-testid="[nombre]-form"` en el `<Form>`
+- `data-testid="submit-button"` en el botón de envío
+- `data-testid="success-message"` en el Alert de éxito
+- `data-testid="error-message"` en el Alert de error
+
+## Accesibilidad Obligatoria
+
+- Todo `<input>` tiene su `<label>` con `htmlFor` y el mismo `id`
+- Campos con error usan `isInvalid` de Bootstrap + `<Form.Control.Feedback>`
+- Botón submit tiene texto descriptivo
+
+## Importar Bootstrap CSS
+
+```typescript
+// En index.tsx o App.tsx — una sola vez
+import 'bootstrap/dist/css/bootstrap.min.css';
+```
+
+## Checklist Antes de Commit
+
+- [ ] `npm test -- --watchAll=false` — todos pasan
+- [ ] Sin errores TypeScript
+- [ ] Formulario funcional en http://localhost:3000
+- [ ] Validaciones de cliente funcionan
+- [ ] Mensajes de éxito y error visibles
+- [ ] Botón deshabilitado durante loading
+- [ ] Ruta registrada en `App.tsx`

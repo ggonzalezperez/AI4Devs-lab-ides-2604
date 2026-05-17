@@ -1,0 +1,72 @@
+---
+description: Reglas específicas para archivos de backend. Se aplican automáticamente cuando trabajas en backend/src/.
+globs: ["backend/src/**/*.ts", "backend/prisma/**/*"]
+alwaysApply: false
+---
+
+# Reglas Backend — LTI
+
+## Lee siempre antes de empezar
+- `docs/backend-standards.md` — arquitectura DDD completa con ejemplos de código
+- `docs/modelo-datos.md` — estado actual del schema y entidades pendientes
+- `backend/prisma/schema.prisma` — schema actual de la BD
+
+## Arquitectura DDD — Estructura de Carpetas
+
+```
+backend/src/
+├── domain/models/          ← Entidades con lógica de negocio + save() + findOne()
+├── domain/repositories/    ← Interfaces (contratos) — NUNCA implementaciones
+├── application/services/   ← Servicios que orquestan el flujo
+├── application/validator.ts ← Validación de todos los inputs externos
+├── presentation/controllers/ ← HTTP handlers thin — solo req/res
+├── infrastructure/         ← Prisma singleton, logger
+└── routes/                 ← Router de Express
+```
+
+## Flujo Obligatorio de una Petición
+
+```
+HTTP Request → Route → Controller → Service → Validator + Domain → Prisma → DB
+```
+
+**Nunca:**
+- El controller llama a Prisma directamente
+- El servicio recibe objetos `req.body` sin validar
+- El dominio importa desde `presentation/` o `infrastructure/`
+
+## Testing — Reglas Estrictas
+
+- **Cobertura mínima: 90%** en branches, functions, lines, statements
+- **TDD siempre**: test → fail → implement → pass
+- **Patrón**: `should_[resultado]_when_[condición]`
+- **Mock de Prisma** en tests unitarios — nunca conectar a BD real
+- Ejecutar siempre: `npm test` y `npm run test:coverage` antes del commit
+
+## Manejo de Errores en Controllers
+
+```typescript
+try {
+  const result = await service.method(data);
+  res.status(201).json({ success: true, data: result });
+} catch (error) {
+  const msg = error instanceof Error ? error.message : 'Error interno';
+  if (msg.includes('inválid') || msg.includes('obligatori')) {
+    res.status(400).json({ success: false, error: msg });
+  } else if (msg.includes('ya existe')) {
+    res.status(409).json({ success: false, error: msg });
+  } else {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Error interno del servidor' });
+  }
+}
+```
+
+## Checklist Antes de Commit
+
+- [ ] `npm test` — todos pasan
+- [ ] `npm run test:coverage` — coverage >= 90%
+- [ ] `npm run build` — sin errores TypeScript
+- [ ] `docs/modelo-datos.md` actualizado si cambió el schema
+- [ ] `docs/api-spec.yml` actualizado si cambió la API
+- [ ] `uploads/` en `.gitignore`

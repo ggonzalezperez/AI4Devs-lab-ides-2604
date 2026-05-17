@@ -1,0 +1,95 @@
+---
+description: Reglas de testing. Se aplican automáticamente en archivos de test.
+globs: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"]
+alwaysApply: false
+---
+
+# Reglas de Testing — LTI
+
+## Principio: TDD siempre
+
+1. Escribe el test → verifica que FALLA
+2. Implementa el mínimo código para que PASE
+3. Refactoriza si procede
+4. Repite
+
+**Nunca** escribas código antes que el test.
+
+## Naming de Tests
+
+```typescript
+// Patrón: should_[resultado]_when_[condición]
+it('should_create_candidate_when_all_required_fields_are_valid', ...)
+it('should_throw_error_when_email_has_invalid_format', ...)
+it('should_return_null_when_candidate_not_found', ...)
+```
+
+## Estructura AAA
+
+```typescript
+it('should_...', async () => {
+  // Arrange — preparar datos y mocks
+  const dto = { firstName: 'Ana', email: 'ana@test.com' };
+  jest.spyOn(Candidate.prototype, 'save').mockResolvedValue(new Candidate({ id: 1, ...dto }));
+
+  // Act — ejecutar la acción bajo test
+  const result = await candidateService.addCandidate(dto);
+
+  // Assert — verificar el resultado
+  expect(result.id).toBe(1);
+  expect(result.email).toBe('ana@test.com');
+});
+```
+
+## Mocking de Prisma (Backend)
+
+```typescript
+jest.mock('../../infrastructure/prismaClient', () => ({
+  getPrismaClient: jest.fn().mockReturnValue({
+    candidate: {
+      create: jest.fn(),
+      findUnique: jest.fn(),
+      findMany: jest.fn(),
+      update: jest.fn(),
+      delete: jest.fn(),
+    },
+  }),
+}));
+```
+
+## Mocking de Servicios (Frontend)
+
+```typescript
+jest.mock('../../services/candidateService');
+
+beforeEach(() => jest.clearAllMocks());
+
+(candidateService.addCandidate as jest.Mock).mockResolvedValue({ id: 1, ... });
+(candidateService.addCandidate as jest.Mock).mockRejectedValue(new Error('Error message'));
+```
+
+## Cobertura Mínima: 90%
+
+```bash
+# Backend
+cd backend && npm run test:coverage
+# Frontend
+cd frontend && npm test -- --coverage --watchAll=false
+```
+
+Verificar que **branches, functions, lines, statements** son todos >= 90%.
+
+## Agrupación de Tests
+
+```typescript
+describe('CandidateService', () => {
+  describe('addCandidate', () => {
+    describe('when data is valid', () => {
+      it('should_create_candidate', ...)
+    });
+    describe('when email is invalid', () => {
+      it('should_throw_validation_error', ...)
+    });
+  });
+});
+```

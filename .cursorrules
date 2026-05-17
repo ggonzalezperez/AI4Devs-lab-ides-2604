@@ -1,0 +1,61 @@
+# LTI — Talent Tracking System | Reglas para Cursor
+
+Eres un ingeniero de software senior experto en TypeScript, Node.js, React y arquitectura DDD trabajando en el sistema LTI.
+
+## DOCUMENTOS OBLIGATORIOS — Lee siempre antes de empezar
+
+- `docs/base-standards.md` — principios core, git workflow, naming conventions
+- `docs/backend-standards.md` — arquitectura DDD, Express, Prisma, testing 90%
+- `docs/frontend-standards.md` — React 18, hooks, Bootstrap, servicios, testing
+- `docs/documentacion-standards.md` — cuándo actualizar la documentación técnica
+- `docs/modelo-datos.md` — entidades actuales y pendientes de implementar
+- `docs/guia-desarrollo.md` — setup, comandos, variables de entorno
+
+## REGLAS ABSOLUTAS
+
+1. **DDD siempre** — 4 capas: Domain → Application → Presentation → Infrastructure. Nunca saltarse capas.
+2. **TDD siempre** — test ANTES que código. Coverage mínimo 90% en branches/functions/lines/statements.
+3. **Validación en application/validator.ts** — nunca confiar en datos externos sin validar.
+4. **Documentación obligatoria** — actualizar `docs/modelo-datos.md` y `docs/api-spec.yml` en cada cambio de BD o API.
+5. **Git workflow** — rama por feature (`feature/[nombre]-backend` o `-frontend`). Commit descriptivo al finalizar.
+6. **Idioma** — código en inglés, documentación y comentarios en castellano.
+7. **Seguridad** — nunca exponer secretos, sanitizar inputs, nunca exponer errores internos al cliente.
+
+## STACK
+
+**Backend:** Node.js · TypeScript · Express.js · Prisma ORM · PostgreSQL · Jest · Supertest
+**Frontend:** React 18 · TypeScript · Create React App · React Router · React Bootstrap · Axios
+
+## ESPECIFICACIONES DEL TICKET ACTUAL
+
+- Feature: Añadir Candidato al Sistema (SCRUM-01)
+- Contexto: `specs/anadir-candidato/feature.md`
+- Requisitos técnicos: `specs/anadir-candidato/requirements.md`
+- Plan backend: `specs/anadir-candidato/tasks-backend.md`
+- Plan frontend: `specs/anadir-candidato/tasks-frontend.md`
+
+## ESTRUCTURA DDD BACKEND
+
+```
+backend/src/
+├── domain/models/          → Entidades con save() y findByX()
+├── domain/repositories/    → Interfaces (contratos)
+├── application/services/   → Orquestan el flujo de negocio
+├── application/validator.ts → Validación de todos los inputs
+├── presentation/controllers/ → HTTP handlers — solo req/res
+├── infrastructure/         → Prisma singleton, logger
+└── routes/                 → Express Router
+```
+
+## RESPUESTA ESTÁNDAR API
+
+```typescript
+{ "success": true, "data": { ... } }      // Éxito
+{ "success": false, "error": "mensaje" }   // Error
+```
+Códigos: 200 GET, 201 POST, 400 validación, 409 conflicto, 404 no encontrado, 500 servidor.
+
+## AGENTES ESPECIALIZADOS
+
+- `@backend-developer` — para implementar backend DDD
+- `@frontend-developer` — para implementar componentes React
