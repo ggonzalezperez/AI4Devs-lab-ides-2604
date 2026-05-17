@@ -18,12 +18,13 @@ Lee los siguientes documentos en este orden para entender el proyecto:
 Disponibles en `ai-specs/agents/`:
 - **[backend-developer](ai-specs/agents/backend-developer.md)** — Para tareas de API, servicios, base de datos, tests unitarios de backend.
 - **[frontend-developer](ai-specs/agents/frontend-developer.md)** — Para componentes React, servicios frontend, routing, tests E2E.
+- **[product-strategy-analyst](ai-specs/agents/product-strategy-analyst.md)** — Para análisis de ideas de producto, definición de usuarios objetivo y propuestas de valor. Usa modelo Opus.
 
 ## Skills Disponibles
 
 Los skills son instrucciones detalladas guardadas en `ai-specs/skills/<nombre>/SKILL.md`.
 
-**Cuando el usuario escriba `/enriquecer-historia`, `/commit` o `/actualizar-docs`, DEBES:**
+**Cuando el usuario escriba cualquiera de los comandos de la tabla, DEBES:**
 1. Leer el archivo `ai-specs/skills/<nombre>/SKILL.md` correspondiente con la herramienta Read.
 2. Seguir exactamente las instrucciones que contiene ese archivo.
 3. No hacer nada antes de leer el skill.
@@ -33,6 +34,14 @@ Los skills son instrucciones detalladas guardadas en `ai-specs/skills/<nombre>/S
 | `/enriquecer-historia` | `ai-specs/skills/enriquecer-historia/SKILL.md` | Transforma una historia de usuario básica en un ticket técnico detallado |
 | `/commit` | `ai-specs/skills/commit/SKILL.md` | Genera un commit descriptivo siguiendo Conventional Commits |
 | `/actualizar-docs` | `ai-specs/skills/actualizar-docs/SKILL.md` | Actualiza la documentación técnica tras implementar un cambio |
+| `/adversarial-review` | `ai-specs/skills/adversarial-review/SKILL.md` | Revisión adversarial (red-team) de una implementación antes de archivarla |
+| `/code-auditing` | `ai-specs/skills/code-auditing/SKILL.md` | Auditoría completa de calidad de código: seguridad, deuda técnica, dead code |
+| `/explain` | `ai-specs/skills/explain/SKILL.md` | Explica conceptos con modelos mentales para cerrar brechas de conocimiento |
+| `/meta-prompt` | `ai-specs/skills/meta-prompt/SKILL.md` | Reescribe un prompt aplicando best practices de prompt engineering |
+| `/show-spec-working` | `ai-specs/skills/show-spec-working/SKILL.md` | Demuestra en vivo el funcionamiento de un spec o feature |
+| `/sync-agent-symlinks` | `ai-specs/skills/sync-agent-symlinks/SKILL.md` | Sincroniza los symlinks entre ai-specs/skills y .claude/skills |
+| `/using-git-worktrees` | `ai-specs/skills/using-git-worktrees/SKILL.md` | Configura un workspace aislado con git worktrees para trabajar en features |
+| `/writing-skills` | `ai-specs/skills/writing-skills/SKILL.md` | Crea o edita skills siguiendo el proceso TDD aplicado a documentación |
 
 ## Reglas Obligatorias
 

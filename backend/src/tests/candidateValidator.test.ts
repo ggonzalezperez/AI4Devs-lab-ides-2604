@@ -5,7 +5,7 @@ describe('validateCandidateData', () => {
     firstName: 'Ana',
     lastName: 'García',
     email: 'ana@example.com',
-    phone: '612345678',
+    phone: '+34 612345678',
   };
 
   describe('when data is valid', () => {

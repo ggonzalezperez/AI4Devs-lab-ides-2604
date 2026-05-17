@@ -9,21 +9,21 @@ export interface CandidateDto {
 }
 
 export function validateCandidateData(data: Partial<CandidateDto>): string | null {
-  if (!data.firstName || !data.firstName.trim()) {
+  if (typeof data.firstName !== 'string' || !data.firstName.trim()) {
     return 'El nombre es obligatorio';
   }
   if (data.firstName.trim().length > 100) {
     return 'El nombre no puede superar los 100 caracteres';
   }
 
-  if (!data.lastName || !data.lastName.trim()) {
+  if (typeof data.lastName !== 'string' || !data.lastName.trim()) {
     return 'El apellido es obligatorio';
   }
   if (data.lastName.trim().length > 100) {
     return 'El apellido no puede superar los 100 caracteres';
   }
 
-  if (!data.email || !data.email.trim()) {
+  if (typeof data.email !== 'string' || !data.email.trim()) {
     return 'El email es obligatorio';
   }
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,8 +34,11 @@ export function validateCandidateData(data: Partial<CandidateDto>): string | nul
     return 'El email no puede superar los 255 caracteres';
   }
 
-  if (data.phone && data.phone.trim()) {
+  if (typeof data.phone === 'string' && data.phone.trim()) {
     const phone = data.phone.trim();
+    if (!phone.startsWith('+')) {
+      return 'El teléfono tiene un formato inválido';
+    }
     if (/[^\d\s\+\-\(\)]/.test(phone)) {
       return 'El teléfono tiene un formato inválido';
     }
@@ -45,7 +48,7 @@ export function validateCandidateData(data: Partial<CandidateDto>): string | nul
     }
   }
 
-  if (data.address && data.address.trim().length > 500) {
+  if (typeof data.address === 'string' && data.address.trim().length > 500) {
     return 'La dirección no puede superar los 500 caracteres';
   }
 

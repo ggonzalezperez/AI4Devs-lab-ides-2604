@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { Candidate, CandidateData } from '../../domain/models/Candidate';
 import { validateCandidateData, CandidateDto } from '../validator';
 
@@ -41,5 +42,12 @@ export async function addCandidate(input: CreateCandidateInput): Promise<Candida
   };
 
   const candidate = new Candidate(candidateData);
-  return candidate.save();
+  try {
+    return await candidate.save();
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      throw new Error(`Ya existe un candidato con el email ${candidateData.email}`);
+    }
+    throw error;
+  }
 }

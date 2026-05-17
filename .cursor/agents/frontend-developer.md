@@ -78,7 +78,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       'application/pdf',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     ];
-    if (!allowed.includes(file.mimetype)) {
+    if (!allowed.includes(file.type)) {
       setFileError('Solo se permiten archivos PDF o DOCX');
       return;
     }

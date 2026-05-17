@@ -48,7 +48,9 @@ export function PhoneField({ value, onChange, error, 'data-testid': testId }: Ph
   const [localNumber, setLocalNumber] = useState(() => parsePhone(value).localNumber);
 
   useEffect(() => {
-    if (value === '') setLocalNumber('');
+    const { dialCode: newDial, localNumber: newNum } = parsePhone(value);
+    setDialCode(newDial);
+    setLocalNumber(newNum);
   }, [value]);
 
   function handleDialChange(e: React.ChangeEvent<HTMLSelectElement>) {
